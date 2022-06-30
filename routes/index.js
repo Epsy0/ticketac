@@ -61,7 +61,10 @@ router.post("/sign-in", async function (req, res, next) {
   }
 });
 
-
+/* GET Home page. */
+router.get('/journey', function(req, res, next) {
+  res.render('journey');
+});
 
 /* GET Home page. */
 router.get('/homepage', function(req, res, next) {
