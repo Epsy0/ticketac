@@ -67,6 +67,18 @@ router.get('/journey', function(req, res, next) {
   res.render('journey');
 });
 
+router.get('/mylasttrips', function(req,res,next) { 
+  
+    res.render('mylasttrips')
+}); 
+
+router.get('/mybooks', function(req,res,next) { 
+  
+  res.render('mybooks')
+});
+
+
+
 /* GET Home page. */
 router.get('/homepage', function(req, res, next) {
   res.render('homepage');
