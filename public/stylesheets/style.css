@@ -13,6 +13,7 @@ a {
   color: #00B7FF;
 }
 
+
 .home {
   padding: 50px; 
 }
@@ -24,4 +25,8 @@ background-color: white;
 
 footer {
   padding: 250px;
+}
+.bg-light {
+  background-color: white; 
+
 }
