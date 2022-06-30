@@ -2,6 +2,7 @@ require('../models/connect')
 var express = require('express');
 var router = express.Router();
 var journeyModel = require('../models/journey')
+var UserModel = require('../models/users')
 
 var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lille"]
 var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"]
