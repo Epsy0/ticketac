@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background: linear-gradient(rgb(186, 215, 251), rgb(47, 152, 251));
   background-repeat: no-repeat;
@@ -13,6 +13,20 @@ a {
   color: #00B7FF;
 }
 
+
+.home {
+  padding: 50px; 
+}
+
+.bg-white {
+background-color: white; 
+
+}
+
+footer {
+  padding: 250px;
+}
 .bg-light {
   background-color: white; 
+
 }
