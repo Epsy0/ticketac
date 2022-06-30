@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var connect = require('../models/connect')
-var UserModel = require('../models/users')
 var journeyModel = require('../models/journey')
 
 var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lille"]
@@ -14,68 +13,37 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-// SIGN UP ON LOGIN PAGE
-router.post("/sign-up", async function (req, res, next) {
-  // Create a new collection user
-  var newUser = new UserModel({
-    firstname: req.body.firstname,
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-  });
-  // Check if user already exists
-  if (await UserModel.findOne({ email: req.body.email })) {
-    res.redirect("/");
-  } else {
-    // Push new user
-    var newUserSave = await newUser.save();
-    // Create a session for this user
-    req.session.user = {
-      username: newUserSave.username,
-      id: newUserSave._id,
-    };
+router.get('/homepage', function(req, res, next) {
+  res.render('homepage');
+});
 
-    res.redirect("/homepage");
+/* Search page  */
+router.post('/search', async function(req, res, next) {
+  var departure = req.body.departure.toLowerCase()
+  departure = departure.charAt(0).toUpperCase() + departure.slice(1)
+  var arrival = req.body.arrival.toLowerCase()
+  arrival = arrival.charAt(0).toUpperCase() + arrival.slice(1)
+
+  var data = {
+    departure: departure,
+    arrival: arrival,
+    date: req.body.date,
+  }
+
+  var journey = await journeyModel.find(data) 
+
+  if (journey.length > 0) {
+    res.render('journey', {journey});
+  } else {
+    res.render('pasdetrain');
   }
 });
 
-// SIGN IN ON LOGIN PAGE
-router.post("/sign-in", async function (req, res, next) {
-  // Post login infos
-  var newUser = { email: req.body.email, password: req.body.password };
-  // Check if email & password are valid
-  if (
-    await UserModel.findOne({
-      email: newUser.email,
-      password: newUser.password,
-    })
-  ) {
-    // Create session for this user
-    var userLog = await UserModel.findOne({ email: req.body.email });
-    req.session.user = {
-      username: userLog.username,
-      id: userLog._id,
-    };
-    res.redirect("/homepage");
-  } else {
-    res.redirect("/");
-  }
-});
 
 /* GET Home page. */
 router.get('/journey', function(req, res, next) {
   res.render('journey');
 });
-
-/* GET Home page. */
-router.get('/homepage', function(req, res, next) {
-  res.render('homepage');
-});
-
-router.post('/sign up', function(req, res, next) {
-  res.render('homepage');
-});
-
 
 
 // Remplissage de la base de donnée, une fois suffit
