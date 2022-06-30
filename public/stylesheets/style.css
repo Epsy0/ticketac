@@ -12,3 +12,7 @@ h4 {
 a {
   color: #00B7FF;
 }
+
+. bg-light {
+  background-color: white; 
+}
