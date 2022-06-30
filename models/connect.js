@@ -8,7 +8,7 @@ var options = {
  };
 
 // --------------------- BDD -----------------------------------------------------
-mongoose.connect('mongodb+srv://XXXXXXXX:*********@XXXXXXXX-0hsfc.mongodb.net/Ticketac?retryWrites=true',
+mongoose.connect('mongodb+srv://geoffroygoirand:Aviron69@ticketaclucasgeoffroy.ta0tm.mongodb.net/?retryWrites=true&w=majority',
    options,
    function(err) {
     if (err) {
