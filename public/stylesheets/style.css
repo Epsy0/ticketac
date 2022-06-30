@@ -1,6 +1,12 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: linear-gradient(rgb(186, 215, 251), rgb(47, 152, 251));
+  background-repeat: no-repeat;
+  }
+
+h4 {
+  color : white;
 }
 
 a {
