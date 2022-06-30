@@ -36,3 +36,9 @@ footer {
 .bg-light {
   background-color: white; 
 }
+
+.text-white h4 text-left {
+  padding: 12px; 
+  margin-top: 12px;
+  margin: 50px;
+}
