@@ -45,7 +45,7 @@ router.get('/journey', function(req, res, next) {
   res.render('journey');
 });
 
-<<<<<<< HEAD
+
 router.get('/mylasttrips', function(req,res,next) { 
   
     res.render('mylasttrips')
@@ -59,17 +59,16 @@ router.get('/mybooks', function(req,res,next) {
 
 
 /* GET Home page. */
-router.get('/homepage', function(req, res, next) {
-  res.render('homepage');
-});
+
 
 router.post('/sign up', function(req, res, next) {
   res.render('homepage');
 });
 
 
-=======
->>>>>>> e9aeb8885d5840d5d67300a9163279499caa0b68
+
+
+
 
 // Remplissage de la base de donnée, une fois suffit
 router.get('/save', async function(req, res, next) {
