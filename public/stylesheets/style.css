@@ -13,6 +13,12 @@ a {
   color: #00B7FF;
 }
 
+.bg-image-homepage{
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 200px;
+  margin-top: 100px;
+  }
 
 .home {
   padding: 50px; 
@@ -26,7 +32,7 @@ background-color: white;
 footer {
   padding: 250px;
 }
+
 .bg-light {
   background-color: white; 
-
 }
