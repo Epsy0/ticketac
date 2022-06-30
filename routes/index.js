@@ -1,11 +1,10 @@
+require('../models/connect')
 var express = require('express');
 var router = express.Router();
-var connect = require('../models/connect')
 var journeyModel = require('../models/journey')
 
 var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lille"]
 var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"]
-
 
 
 /* GET Sign page. */
@@ -35,16 +34,22 @@ router.post('/search', async function(req, res, next) {
   if (journey.length > 0) {
     res.render('journey', {journey});
   } else {
-    res.render('pasdetrain');
+    res.render('notrain');
   }
 });
-
 
 /* GET Home page. */
 router.get('/journey', function(req, res, next) {
   res.render('journey');
 });
 
+router.get('/lasttrips', function(req, res, next) {
+  res.render('lasttrips');
+});
+
+router.get('/mybooks', function(req, res, next) {
+  res.render('mybooks');
+});
 
 // Remplissage de la base de donnée, une fois suffit
 router.get('/save', async function(req, res, next) {
