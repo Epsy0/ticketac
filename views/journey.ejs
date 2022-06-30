@@ -16,24 +16,16 @@
 
         <div class="col-12 col-md-6 offset-md-3">
             <h4>Ticket available on date :</h4>
-
+            <% for (var i = 0; i < journey.length; i++) { %>
             <div class="bg-white text-dark d-flex align-items-center justify-content-between border p-3 mb-2 rounded">
-                <span class="font-weight-bold"> Paris / Lille </span>
-                <span> Train departure at : 15 pm</span>
+                <span class="font-weight-bold"><%=journey[i].departure%> / <%=journey[i].arrival%></span>
+                <span> Train departure at : <%=journey[i].departureTime%> pm</span>
                     <div>
-                        <span class="font-weight-bold h5 mr-2">93€</span>
+                        <span class="font-weight-bold h5 mr-2"><%=journey[i].price%>€</span>
                         <button type="button" class="btn btn-danger">Ok</button>
                     </div>
             </div>
-            <div class="bg-white text-dark d-flex align-items-center justify-content-between border p-3 rounded">
-                <span class="font-weight-bold"> Paris / Lille </span>
-                <span> Train departure at : 15 pm</span>
-                    <div>
-                        <span class="font-weight-bold h5 mr-2">93€</span>
-                        <button type="button" class="btn btn-danger">Ok</button>
-                    </div>
-            </div>
-
+            <% } %>
         </div>
        
       </div>
