@@ -2,10 +2,9 @@ var express = require('express');
 var router = express.Router();
 var UserModel = require('../models/users')
 
-/* GET users listing. */
 // SIGN UP ON LOGIN PAGE
 router.post("/sign-up", async function (req, res, next) {
-  // Create a new collection user
+  // Create a new user
   var newUser = new UserModel({
     firstname: req.body.firstname,
     name: req.body.name,
@@ -30,7 +29,6 @@ router.post("/sign-up", async function (req, res, next) {
 
 // SIGN IN ON LOGIN PAGE
 router.post("/sign-in", async function (req, res, next) {
-  // Post login infos
   var newUser = { email: req.body.email, password: req.body.password };
   // Check if email & password are valid
   if (
