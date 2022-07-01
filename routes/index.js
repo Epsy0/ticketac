@@ -7,17 +7,14 @@ var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lil
 var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"]
 
 
-/* GET Sign page. */
+/* Sign page. */
 router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-router.get('/homepage', function(req, res, next) {
-  res.render('homepage');
-});
-
 /* Search page  */
 router.post('/search', async function(req, res, next) {
+  /* To resolve Case errors */
   var departure = req.body.departure.toLowerCase()
   departure = departure.charAt(0).toUpperCase() + departure.slice(1)
   var arrival = req.body.arrival.toLowerCase()
@@ -27,33 +24,48 @@ router.post('/search', async function(req, res, next) {
     departure: departure,
     arrival: arrival,
     date: req.body.date,
-  }
+  };
 
   var journey = await journeyModel.find(data) 
 
+  // Redirection if search works or not
   if (journey.length > 0) {
+    req.session.user = {
+
+    }
     res.render('journey', {journey});
   } else {
     res.render('notrain');
   }
 });
 
-/* GET Home page. */
+
+/* A supprimer, juste pour check */
+router.get('/homepage', function(req, res, next) {
+  res.render('homepage');
+});
 router.get('/journey', function(req, res, next) {
   res.render('journey');
 });
-
+router.get('/notrain', function(req, res, next) {
+  res.render('notrain');
+});
+router.get('/mybooks', function(req, res, next) {
+  req.session.journey = {
+    departure: req.query.departure,
+    arrival: req.query.arrival,
+    time: req.query.time,
+    price: req.query.price,
+    date: req.query.date
+  }
+  console.log(req.session.journey)
+  res.render('mybooks');
+});
 router.get('/lasttrips', function(req, res, next) {
   res.render('lasttrips');
 });
 
-router.get('/mybooks', function(req, res, next) {
-  res.render('mybooks');
-});
 
-router.get('/notrain', function(req, res, next) {
-  res.render('notrain');
-});
 
 // Remplissage de la base de donnée, une fois suffit
 router.get('/save', async function(req, res, next) {

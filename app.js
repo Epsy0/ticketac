@@ -17,6 +17,7 @@ app.use(
    saveUninitialized: false,
   })
   );
+  
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,6 +31,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// Transforms dates to day / month / year
+app.locals.dateFormat = function(obj) {
+  var date = new Date(obj);
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1;
+  if (month < 10) {
+    month = "0" + month;
+  }
+  var day = date.getDate();
+  if (day < 10) {
+    day = "0" + day;
+  }
+  return `${day}/${month}/${year}`;
+  }
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
