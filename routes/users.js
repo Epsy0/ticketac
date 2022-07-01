@@ -6,7 +6,7 @@ var UserModel = require('../models/users')
 router.get("/logout", function (req, res, next) {
   req.session.user = null;
   req.session.journey = [];
-  res.redirect("/login");
+  res.redirect("/");
 });
 
 router.post("/sign-up", async function (req, res, next) {
@@ -19,7 +19,7 @@ router.post("/sign-up", async function (req, res, next) {
   });
   // Check if user already exists
   if (await UserModel.findOne({ email: req.body.email })) {
-    res.redirect("/login");
+    res.redirect("/");
   } else {
     // Push new user
     var newUserSave = await newUser.save();
@@ -51,7 +51,7 @@ router.post("/sign-in", async function (req, res, next) {
     };
     res.redirect("/homepage");
   } else {
-    res.redirect("/login");
+    res.redirect("/");
   }
 });
 
