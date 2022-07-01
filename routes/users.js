@@ -3,6 +3,12 @@ var router = express.Router();
 var UserModel = require('../models/users')
 
 // SIGN UP ON LOGIN PAGE
+router.get("/logout", function (req, res, next) {
+  req.session.user = null;
+  req.session.journey = null,
+  res.redirect("/");
+});
+
 router.post("/sign-up", async function (req, res, next) {
   // Create a new user
   var newUser = new UserModel({

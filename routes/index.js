@@ -38,15 +38,18 @@ router.post('/search', async function(req, res, next) {
 });
 
 router.get('/mybooks', function(req, res, next) {
-  req.session.journey = {
+  if (req.session.journey === undefined || req.session.journey === null) {
+    req.session.journey = [];
+  } else {
+  req.session.journey.push({
     departure: req.query.departure,
     arrival: req.query.arrival,
     time: req.query.time,
     price: req.query.price,
     date: req.query.date
-  }
+  })}
   console.log(req.session.journey)
-  res.render('mybooks');
+  res.render('mybooks', {journey : req.session.journey});
 });
 
 

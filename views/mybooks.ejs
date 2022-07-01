@@ -28,12 +28,30 @@
                   <tr>
                     <th scope="col">N°</th>
                     <th scope="col">Journey</th>
+                    <th scope="col">Date</th>
                     <th scope="col">Departure time</th>
                     <th scope="col">Price</th>
                   </tr>
                 </thead>
                 <tbody>
-                 
+                  <% var totalPrice = 0;
+                    for (var i = 0; i < journey.length; i++) { 
+                    totalPrice = Number(journey[i].price) + Number(totalPrice) %>
+                  <tr>
+                    <td scope="col"><%=i%></td>
+                    <td scope="col"><%=journey[i].departure%> / <%=journey[i].arrival%></td>
+                    <td scope="col"><%=journey[i].date%></td>
+                    <td scope="col"><%=journey[i].time%> pm</td>
+                    <td scope="col"><%=journey[i].price%> €</td>
+                  </tr>
+                  <% } %>
+                  <tr class="table-danger">
+                    <td scope="col">Total</td>
+                    <td scope="col"></td>
+                    <td scope="col"></td>
+                    <td scope="col"></td>
+                    <td scope="col"><%=totalPrice%> €</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
