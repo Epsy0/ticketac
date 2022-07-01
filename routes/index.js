@@ -15,33 +15,23 @@ router.get('/', function(req, res, next) {
 /* Search page  */
 router.post('/search', async function(req, res, next) {
   /* To resolve Case errors */
-  var departure = req.body.departure.toLowerCase()
-  departure = departure.charAt(0).toUpperCase() + departure.slice(1)
-  var arrival = req.body.arrival.toLowerCase()
-  arrival = arrival.charAt(0).toUpperCase() + arrival.slice(1)
-
-  var data = {
-    departure: departure,
-    arrival: arrival,
-    date: req.body.date,
-  };
-
-  var journey = await journeyModel.find(data) 
-
-  // Redirection if search works or not
-  if (journey.length > 0) {
-    res.render('journey', {journey});
-  } else {
-    res.render('notrain');
+  if (!req.session.user){
+    return res.redirect('/login');
   }
+
+  const results = await journeyModel.find({
+    departure: req.body.departure,
+    arrival: req.body.arrival,
+    date: req.body.date
+  });
+
+  res.render('journey', { results });
 });
 
-router.get('/mybooks', function(req, res, next) {
-  if (!req.session.user) {
-    res.render('index');
-  }
-  
-  if (req.session.journey === undefined) {
+
+router.get('/mybooks2', function(req, res, next) {
+  if (req.session.journey === undefined || req.session.journey === null) {
+
     req.session.journey = [];
   }
   
@@ -49,11 +39,11 @@ router.get('/mybooks', function(req, res, next) {
   req.session.journey.push({
     departure: req.query.departure,
     arrival: req.query.arrival,
-    time: req.query.time,
     price: req.query.price,
     date: req.query.date
   })}
   console.log(req.session.journey)
+    time: req.query.time,
   res.render('mybooks', {journey : req.session.journey});
 });
 
@@ -65,34 +55,85 @@ router.get('/homepage', function(req, res, next) {
   res.render('homepage');
 });
 
-router.get('/journey', function(req, res, next) {
-  if (!req.session.user) {
-    res.render('index');
-  }
-  res.render('journey');
-});
 
 router.get('/notrain', function(req, res, next) {
   res.render('notrain');
 });
 
-router.get('/lasttrips', async function(req, res, next) {
-  if (req.session.user_logged === true) {
-    var _id = req.session.user._id
-    var user_data = await UserModel.findById(_id)
-    var last_trips = user_data.trips
-  
-    res.render('lasttrips', {last_trips:last_trips});
+
+router.get('/add-trip', async (req, res) => {
+  if (!req.session.user){
+    return res.redirect('/login');
+  }
+  if (req.session.user.trips) {
+    req.session.user.trips.push(req.query.trip_id);
     
+
   } else {
-    res.redirect('/homepage')
-}; 
+    req.session.user.trips = [req.query.trip_id]
+  }
+  //console.log('SESSION: ', req.session.user);
+  res.redirect('/mybooks');
 });
+
+router.get('/mybooks', async (req, res, next) => {
+  if (!req.session.user){
+    return res.redirect('/login');
+  }
+
+
+
+  const trips = [];
+  for (let i = 0; i < req.session.user.trips.length; i++){
+    const journey = await journeyModel.findById(req.session.user.trips[i]);
+    trips.push(journey);
+    //console.log('TRIPS DURING LOOP: ', trips);
+  }
+
+  res.render('mybooks', { trips });
+});
+
+router.get('/confirm-checkout', async (req, res) => {
+  if (!req.session.user){
+    return res.redirect('/login');
+  }
+
+  const user = await UserModel.findById(req.session.user.id);
+
+  const trips = user.trips? [...user.trips] : [];
+  req.session.user.trips.forEach( (trip_id) => {
+    trips.push( trip_id );
+  })
+  
+  await UserModel.updateOne({ user, trips });
+  req.session.user.trips = [];
+
+  res.redirect('/');
+})
+
+/* Get Last trips */
+router.get('/lasttrips', async (req, res) => {
+  if (!req.session.user){
+    return res.redirect('/login');
+  }
+  const trips = {
+    date: "1 er Juillet 2022", 
+    departure: "Marseille", 
+    arrival: "Paris", 
+    departureTime: "13h",
+    price: "75"
+  }
+
+  res.render('lasttrips', { trips: trips });
+})
+
+
 
 
 router.get('/login', function(req,res,next) { 
   res.render('index')
 });
+
 
 /* GET Home page. */
 
