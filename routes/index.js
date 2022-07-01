@@ -2,6 +2,7 @@ require('../models/connect')
 var express = require('express');
 var router = express.Router();
 var journeyModel = require('../models/journey')
+var UserModel = require('../models/users')
 
 var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lille"]
 var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"]
@@ -30,13 +31,22 @@ router.post('/search', async function(req, res, next) {
 
   // Redirection if search works or not
   if (journey.length > 0) {
-    req.session.user = {
-
-    }
     res.render('journey', {journey});
   } else {
     res.render('notrain');
   }
+});
+
+router.get('/mybooks', function(req, res, next) {
+  req.session.journey = {
+    departure: req.query.departure,
+    arrival: req.query.arrival,
+    time: req.query.time,
+    price: req.query.price,
+    date: req.query.date
+  }
+  console.log(req.session.journey)
+  res.render('mybooks');
 });
 
 
@@ -50,21 +60,23 @@ router.get('/journey', function(req, res, next) {
 router.get('/notrain', function(req, res, next) {
   res.render('notrain');
 });
-router.get('/mybooks', function(req, res, next) {
-  req.session.journey = {
-    departure: req.query.departure,
-    arrival: req.query.arrival,
-    time: req.query.time,
-    price: req.query.price,
-    date: req.query.date
-  }
-  console.log(req.session.journey)
-  res.render('mybooks');
-});
 router.get('/lasttrips', function(req, res, next) {
   res.render('lasttrips');
 });
+router.get('/mylasttrips', function(req,res,next) { 
+    res.render('mylasttrips')
+}); 
+router.get('/mybooks', function(req,res,next) { 
+  res.render('mybooks')
+});
 
+
+/* GET Home page. */
+
+
+router.post('/sign up', function(req, res, next) {
+  res.render('homepage');
+});
 
 
 // Remplissage de la base de donnée, une fois suffit
