@@ -34,23 +34,23 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% var totalPrice = 0;
-                    for (var i = 0; i < journey.length; i++) { 
-                    totalPrice = Number(journey[i].price) + Number(totalPrice) %>
-                  <tr>
-                    <td scope="col"><%=i%></td>
-                    <td scope="col"><%=journey[i].departure%> / <%=journey[i].arrival%></td>
-                    <td scope="col"><%=journey[i].date%></td>
-                    <td scope="col"><%=journey[i].time%> pm</td>
-                    <td scope="col"><%=journey[i].price%> €</td>
-                  </tr>
-                  <% } %>
+                    <% let total = 0;
+                    trips.forEach((trip, index) => { 
+                      total += trip.price             %>
+                      <tr>
+                        <th scope="row"><%= index + 1 %></th>
+                        <td><%= trip.departure %> / <%= trip.arrival %></td>
+                        <td><%= trip.date %></td>
+                        <td><%= trip.departureTime %></td>
+                        <td><%= trip.price %> €</td>
+                      </tr>
+                  <% }) %>
                   <tr class="table-danger">
                     <td scope="col">Total</td>
                     <td scope="col"></td>
                     <td scope="col"></td>
                     <td scope="col"></td>
-                    <td scope="col"><%=totalPrice%> €</td>
+                    <td scope="col"><%=total%> €</td>
                   </tr>
                 </tbody>
               </table>
@@ -60,7 +60,7 @@
 
             <div class="col-12">
               <div class="d-flex flex-row-reverse offset-1">
-                <a href="/homepage" type="button" class="btn btn-danger">Confirm</a>
+                <a href="/confirm-checkout" type="button" class="btn btn-danger">Confirm</a>
               </div>
             </div>
 
