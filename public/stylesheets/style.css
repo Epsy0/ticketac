@@ -22,16 +22,17 @@ a {
 
 .home {
   padding: 50px; 
+  min-height: 85vh;
+}
+
+html {
+  height: 100vh; 
 }
 
 .bg-white {
 background-color: white; 
-
 }
 
-footer {
-  padding: 250px;
-}
 
 .bg-light {
   background-color: white; 
