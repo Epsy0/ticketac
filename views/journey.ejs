@@ -22,7 +22,7 @@
                 <span> Train departure at : <%=journey[i].departureTime%> pm</span>
                     <div>
                         <span class="font-weight-bold h5 mr-2"><%=journey[i].price%>€</span>
-                        <a href="/mybooks?departure=<%=journey[i].departure%>&arrival=<%=journey[i].arrival%>&time=<%=journey[i].departureTime%>&price=<%=journey[i].price%>&date=<%=dateFormat(journey[0].date)%>" type="submit" class="btn btn-danger">Ok</a>
+                        <a href="/mybooks?departure=<%=journey[i].departure%>&arrival=<%=journey[i].arrival%>&time=<%=journey[i].departureTime%>&price=<%=journey[i].price%>&date=<%=dateFormat(journey[0].date)%>" type="submit" class="btn btn-danger">Réserver</a>
                     </div>
             </div>
             <% } %>

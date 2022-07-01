@@ -7,10 +7,13 @@ var UserModel = require('../models/users')
 var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lille"]
 var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"]
 
-
 /* Sign page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+//   var log = "Logout"
+// if (!req.session.user) {
+//   log = "Login"
+// }
+  res.render('login',);
 });
 
 /* Search page  */
@@ -38,9 +41,10 @@ router.post('/search', async function(req, res, next) {
 });
 
 router.get('/mybooks', function(req, res, next) {
-  if (req.session.journey === undefined || req.session.journey === null) {
+  if (req.session.journey === undefined) {
     req.session.journey = [];
-  } else {
+  }
+  if (req.query.departure) {
   req.session.journey.push({
     departure: req.query.departure,
     arrival: req.query.arrival,
@@ -51,7 +55,6 @@ router.get('/mybooks', function(req, res, next) {
   console.log(req.session.journey)
   res.render('mybooks', {journey : req.session.journey});
 });
-
 
 /* A supprimer, juste pour check */
 router.get('/homepage', function(req, res, next) {
@@ -69,21 +72,22 @@ router.get('/lasttrips', async function(req, res, next) {
     var user_data = await UserModel.findById(_id)
     var last_trips = user_data.trips
   
-    res.render('last-trips', {last_trips:last_trips});
+    res.render('lasttrips', {last_trips:last_trips});
     
   } else {
     res.redirect('/homepage')
 }; 
 });
 
-
 router.get('/mybooks', function(req,res,next) { 
   res.render('mybooks')
 });
 
+router.get('/login', function(req,res,next) { 
+  res.render('login')
+});
 
 /* GET Home page. */
-
 
 router.post('/sign up', function(req, res, next) {
   res.render('homepage');
