@@ -33,7 +33,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                 
+                  <%  for (let i=0; i<last_trips.length;i++) { %>
+                    <tr>
+                      <th scope="row"><%= date_format(last_trips[i].date) %></th>
+                      <td><%= last_trips[i].departure %> / <%= last_trips[i].arrival %></td>
+                      <td><%= date_format(last_trips[i].departureTime) %></td>
+                      <td><%= last_trips[i].price %> €</td>
+                    </tr>
+                  <% } %>
                 </tbody>
               </table>
             </div>

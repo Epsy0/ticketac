@@ -60,12 +60,20 @@ router.get('/journey', function(req, res, next) {
 router.get('/notrain', function(req, res, next) {
   res.render('notrain');
 });
-router.get('/lasttrips', function(req, res, next) {
-  res.render('lasttrips');
+router.get('/lasttrips', async function(req, res, next) {
+  if (req.session.user_logged === true) {
+    var _id = req.session.user._id
+    var user_data = await UserModel.findById(_id)
+    var last_trips = user_data.trips
+  
+    res.render('last-trips', {last_trips:last_trips});
+    
+  } else {
+    res.redirect('/homepage')
+}; 
 });
-router.get('/mylasttrips', function(req,res,next) { 
-    res.render('mylasttrips')
-}); 
+
+
 router.get('/mybooks', function(req,res,next) { 
   res.render('mybooks')
 });
