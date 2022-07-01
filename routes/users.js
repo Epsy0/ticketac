@@ -5,7 +5,7 @@ var UserModel = require('../models/users')
 // SIGN UP ON LOGIN PAGE
 router.get("/logout", function (req, res, next) {
   req.session.user = null;
-  req.session.journey = null,
+  req.session.journey = [];
   res.redirect("/");
 });
 

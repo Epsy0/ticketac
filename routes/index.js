@@ -7,10 +7,9 @@ var UserModel = require('../models/users')
 var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lille"]
 var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"]
 
-
 /* Sign page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+  res.render('index',);
 });
 
 /* Search page  */
@@ -29,30 +28,38 @@ router.post('/search', async function(req, res, next) {
   res.render('journey', { results });
 });
 
+
 router.get('/mybooks2', function(req, res, next) {
   if (req.session.journey === undefined || req.session.journey === null) {
+
     req.session.journey = [];
-  } else {
+  }
+  
+  if (req.query.departure) {
   req.session.journey.push({
     departure: req.query.departure,
     arrival: req.query.arrival,
-    time: req.query.time,
     price: req.query.price,
     date: req.query.date
   })}
   console.log(req.session.journey)
+    time: req.query.time,
   res.render('mybooks', {journey : req.session.journey});
 });
 
-
 /* A supprimer, juste pour check */
 router.get('/homepage', function(req, res, next) {
+  if (!req.session.user) {
+    res.render('index');
+  }
   res.render('homepage');
 });
+
 
 router.get('/notrain', function(req, res, next) {
   res.render('notrain');
 });
+
 
 router.get('/add-trip', async (req, res) => {
   if (!req.session.user){
@@ -60,6 +67,8 @@ router.get('/add-trip', async (req, res) => {
   }
   if (req.session.user.trips) {
     req.session.user.trips.push(req.query.trip_id);
+    
+
   } else {
     req.session.user.trips = [req.query.trip_id]
   }
@@ -71,7 +80,8 @@ router.get('/mybooks', async (req, res, next) => {
   if (!req.session.user){
     return res.redirect('/login');
   }
-  //console.log('TRIPS SESSION: ', req.session.user.trips);
+
+
 
   const trips = [];
   for (let i = 0; i < req.session.user.trips.length; i++){
@@ -79,7 +89,7 @@ router.get('/mybooks', async (req, res, next) => {
     trips.push(journey);
     //console.log('TRIPS DURING LOOP: ', trips);
   }
-  //console.log('TRIPS FOR EJS: ', trips);
+
   res.render('mybooks', { trips });
 });
 
@@ -88,9 +98,8 @@ router.get('/confirm-checkout', async (req, res) => {
     return res.redirect('/login');
   }
 
-  // les trips sont stockés dans le user de la BDD
   const user = await UserModel.findById(req.session.user.id);
-  //console.log('USER: ', user);
+
   const trips = user.trips? [...user.trips] : [];
   req.session.user.trips.forEach( (trip_id) => {
     trips.push( trip_id );
@@ -120,8 +129,13 @@ router.get('/lasttrips', async (req, res) => {
 
 
 
-/* GET Home page. */
 
+router.get('/login', function(req,res,next) { 
+  res.render('index')
+});
+
+
+/* GET Home page. */
 
 router.post('/sign up', function(req, res, next) {
   res.render('homepage');
