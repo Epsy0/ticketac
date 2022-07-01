@@ -44,13 +44,14 @@ router.get('/mybooks', function(req, res, next) {
   if (req.session.journey === undefined) {
     req.session.journey = [];
   }
+  if (req.query.departure) {
   req.session.journey.push({
     departure: req.query.departure,
     arrival: req.query.arrival,
     time: req.query.time,
     price: req.query.price,
     date: req.query.date
-  })
+  })}
   console.log(req.session.journey)
   res.render('mybooks', {journey : req.session.journey});
 });
